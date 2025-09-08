@@ -6,15 +6,53 @@ import {
   Typography,
 } from "@mui/material";
 import Logo from "../../assets/booksLogo.png";
-import React from "react";
+import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
+import { useForm } from "react-hook-form";
+import { Login as LoginApi } from "../../services/apiAuth";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const navigate = useNavigate();
+
+  async function onSubmit(data) {
+    try {
+      setIsLoading(true);
+     const res= await LoginApi(data);
+     localStorage.setItem('token',res?.data?.accessToken)
+     localStorage.setItem('userData',JSON.stringify(res?.data?.profile))
+      toast.success("login success");
+      navigate("/");
+      reset(); // يمسح البيانات بعد اللوجين
+    } catch (error) {
+      console.log(error);
+      toast.error("login failed");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <Box
       component={"form"}
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <img src={Logo} alt="logo" style={{ marginBottom: "2rem" }} />
+
       <Box sx={{ width: "80%", mb: "2rem" }}>
         <Typography
           variant="subtitle1"
@@ -24,46 +62,68 @@ function Login() {
         </Typography>
         <Typography variant="h3">Login now</Typography>
       </Box>
+
       {/* email */}
-      <TextField sx={{ width: "80%", mb: "2rem" }} label={"Email"} />
-      {/* email */}
-      <TextField sx={{ width: "80%", mb: "1rem" }} label={"Password"} />
+      <TextField
+        sx={{ width: "80%", mb: "2rem" }}
+        label="Email"
+        {...register("email", { required: "Email is required" })}
+        error={!!errors.email}
+        helperText={errors.email?.message}
+      />
+
+      {/* password */}
+      <TextField
+        sx={{ width: "80%", mb: "1rem" }}
+        label="Password"
+        type="password"
+        {...register("password", { required: "Password is required" })}
+        error={!!errors.password}
+        helperText={errors.password?.message}
+      />
+
       <Box mb={"1rem"} display={"flex"} alignItems={"center"} width={"80%"}>
         <FormControlLabel
           control={<Checkbox />}
-          label={"Remember me"}
+          label="Remember me"
           sx={{ flexGrow: 1 }}
         />
         <Box
           component={"p"}
           color={"#6251DD"}
           sx={{ m: "0", cursor: "pointer" }}
+        onClick={() => navigate("/forgetpassword")}
         >
           Forget password
         </Box>
       </Box>
+
       <Button
         sx={{
           width: "80%",
           padding: "12px 0px",
           fontSize: "20px",
           mb: "1.5rem",
+          backgroundColor:'#6251dd'
         }}
         variant="contained"
-        type="sumbit"
+        type="submit"
+        disabled={isLoading}
       >
-        Login
+        {isLoading ? "Loading..." : "Login"}
       </Button>
-        <Button
+
+      <Button
         sx={{
           width: "80%",
           padding: "12px 0px",
           fontSize: "20px",
         }}
         variant="outlined"
-        type="sumbit"
+        type="button" // تم تعديلها من sumbit
+        onClick={() => navigate("/register")}
       >
-        register
+        Register
       </Button>
     </Box>
   );

@@ -9,6 +9,8 @@ import BookDetails from "./Pages/BookDetails"
 import Cart from "./Pages/Cart"
 import Login from './features/Auth/Login'
 import Register from './features/Auth/Register'
+import ForgetPassword from "./features/Auth/ForgetPassword"
+import ResetPassword from "./features/Auth/ResetPassword"
 
 function App() {
 
@@ -17,14 +19,16 @@ function App() {
       <BrowserRouter>
         <Routes>
             <Route  element={<AppLayOut/>}>
-                  <Route path="/" element={<Home/>}/>
+                  <Route index element={<Home/>}/>
                   <Route path="allBooks" element={<ProtectedRoute><AllBooks/></ProtectedRoute>} />
                   <Route path="book/:bookId" element={<ProtectedRoute><BookDetails/></ProtectedRoute>}/>
                   <Route path="cart" element={<ProtectedRoute><Cart/></ProtectedRoute>} />
             </Route>
             <Route element={<AuthLayOut/>}>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/register" element={<Register/>}/>
+              <Route path="login" element={<Login/>}/>
+              <Route path="register" element={<Register/>}/>
+              <Route path="forgetpassword" element={<ForgetPassword/>}/>
+              <Route path="resetpassword" element={<ResetPassword/>}/>
             </Route>
         </Routes>
       </BrowserRouter>
