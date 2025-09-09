@@ -11,23 +11,25 @@ import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
 import {ForgetPassword as ForgetPasswordApi} from '../../services/apiAuth'
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { forgetPassword } from "./AuthSlice";
 function ForgetPassword() {
   const navigate=useNavigate()
-  const [isLoading,setIsLoading]=useState(false)
+  const dispatch=useDispatch()
+  const {isLoading,error}=useSelector((store)=>store.auth)
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 async  function onSubmit(data) {
     try {
-        setIsLoading(true)
-        await ForgetPasswordApi(data)
-        navigate('/resetpassword')
-    } catch (error) {
+      await dispatch(forgetPassword(data)).unwrap()
+      navigate('/resetpassword')
+      reset()
+    } catch (err) {
       console.log(error);
-    }finally{
-      setIsLoading(false)
     }
 }
   return (
@@ -69,7 +71,7 @@ async  function onSubmit(data) {
         }}
         variant="contained"
         type="submit"
-        
+        disabled={isLoading}
       >
         Send
       </Button>
@@ -77,4 +79,4 @@ async  function onSubmit(data) {
   );
 }
 
-export default ForgetPassword;
+export default ForgetPassword

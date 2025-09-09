@@ -11,23 +11,23 @@ import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ResetPassword as ResetPasswordApi } from "../../services/apiAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPassword } from "./AuthSlice";
 function ResetPassword() {
     const navigate=useNavigate()
-  const [isLoading,setIsLoading]=useState(false)
-  const {
+    const {isLoading,error}=useSelector((store)=>store.auth)
+    const dispatch=useDispatch()
+    const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 async  function onSubmit(data) {
     try {
-        setIsLoading(true)
-        await ResetPasswordApi(data)
+        await dispatch(resetPassword(data)).unwrap()
         navigate('/login')
-    } catch (error) {
+    } catch (err) {
       console.log(error);
-    }finally{
-      setIsLoading(false)
     }
 }
  return (

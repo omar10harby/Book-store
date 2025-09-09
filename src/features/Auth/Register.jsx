@@ -11,23 +11,24 @@ import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Register as RegisterApi } from "../../services/apiAuth";
+import {register as registerAction} from './AuthSlice'
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 function Register() {
   const navigate = useNavigate();
+  const dispatch=useDispatch()
+  const {isLoading,error}=useSelector((store)=>store.auth)
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors},
   } = useForm();
   async function onSubmit(data) {
     try {
-      await RegisterApi({ ...data, role: "Customer" });
-      toast.success("Register success");
+      await dispatch(registerAction(data)).unwrap()
       navigate("/login");
-    } catch (error) {
+    } catch (err) {
       console.log(error);
-      toast.error("Register faild");
     }
   }
   return (

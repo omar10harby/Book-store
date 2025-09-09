@@ -9,12 +9,15 @@ import Logo from "../../assets/booksLogo.png";
 import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
-import { Login as LoginApi } from "../../services/apiAuth";
+// import { Login as LoginApi } from "../../services/apiAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "./AuthSlice";
 function Login() {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoading,error } = useSelector((store) => store.auth);
   const {
     register,
     handleSubmit,
@@ -27,21 +30,16 @@ function Login() {
     },
   });
   const navigate = useNavigate();
-
   async function onSubmit(data) {
     try {
-      setIsLoading(true);
-     const res= await LoginApi(data);
-     localStorage.setItem('token',res?.data?.accessToken)
-     localStorage.setItem('userData',JSON.stringify(res?.data?.profile))
+      await dispatch(login(data)).unwrap();
       toast.success("login success");
       navigate("/");
-      reset(); // يمسح البيانات بعد اللوجين
-    } catch (error) {
+      reset();
+
+    } catch (err) {
       console.log(error);
-      toast.error("login failed");
-    } finally {
-      setIsLoading(false);
+      
     }
   }
 
@@ -92,7 +90,7 @@ function Login() {
           component={"p"}
           color={"#6251DD"}
           sx={{ m: "0", cursor: "pointer" }}
-        onClick={() => navigate("/forgetpassword")}
+          onClick={() => navigate("/forgetpassword")}
         >
           Forget password
         </Box>
@@ -104,7 +102,7 @@ function Login() {
           padding: "12px 0px",
           fontSize: "20px",
           mb: "1.5rem",
-          backgroundColor:'#6251dd'
+          backgroundColor: "#6251dd",
         }}
         variant="contained"
         type="submit"
