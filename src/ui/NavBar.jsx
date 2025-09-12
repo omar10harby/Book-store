@@ -1,115 +1,39 @@
-import { Box, Container, Divider, Grid, IconButton } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { NavLink } from "react-router-dom";
-import NavbarLogo from "../assets/sample logo 1.png";
-import React from "react";
+import { Box, Container, Divider, Drawer, Grid, IconButton } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import React, { useState } from "react";
+import Logo from "./Logo";
+import NavLinks from "./NavLinks";
+import NavIcons from "./NavIcons";
+import IconsDrawer from "./SideDrawer";
+import SideDrawer from "./SideDrawer";
 
 function NavBar() {
+  const [open,setOpen]=useState(false)
+  function toggleOpen(value){
+    setOpen(value)
+  }
   return (
-    <Box sx={{ backgroundColor: "#eee" }}>
+    <Box >
       <Container>
         <Grid
           container
           alignItems={"center"}
           justifyContent={"space-between"}
           spacing={2}
-          padding={1.25}
+          padding={1.3}
         >
           {/* Logo */}
-          <Grid size={{ xs: 6, sm: 3, md: 2 }}>
-            <Box>
-              <img
-                src={NavbarLogo}
-                alt="Logo"
-                style={{
-                  maxWidth: "45px",
-                }}
-              />
-            </Box>
-          </Grid>
-
+          <Logo/>
           {/* Links */}
-          <Grid
-            size={{ xs: 0, sm: 6, md: 8 }}
-            sx={{ display: { xs: "none", md: "block" } }}
-          >
-            <Box
-              component={"ul"}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                p: 0,
-                m: 0,
-              }}
-            >
-              <Box component={"li"}>
-                <NavLink>Home</NavLink>
-              </Box>
-
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ mx: 1, borderColor: "#ccc" }}
-              />
-
-              <Box component={"li"}>
-                <NavLink>Books</NavLink>
-              </Box>
-
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ mx: 1, borderColor: "#ccc" }}
-              />
-
-              <Box component={"li"}>
-                <NavLink>New Realeas</NavLink>
-              </Box>
-            </Box>
-          </Grid>
+          <NavLinks/>
           {/* icons */}
-          <Grid size={{ xs: 6, sm: 3, md: 2 }}>
-            <Box
-              component={"ul"}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                p: 0,
-                m: 0,
-              }}
-            >
-              <Box component={"li"}>
-                <IconButton>
-                  <PermIdentityOutlinedIcon />
-                </IconButton>
-              </Box>
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ mx: 1, borderColor: "#ccc" }}
-              />
-              <Box component={"li"}>
-                <IconButton>
-                  <ShoppingCartOutlinedIcon />
-                </IconButton>
-              </Box>
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ mx: 1, borderColor: "#ccc" }}
-              />
-              <Box component={"li"}>
-                <IconButton>
-                  <LoginOutlinedIcon />
-                </IconButton>
-              </Box>
-            </Box>
+          <NavIcons/>
+          <Grid  sx={{display:{md:'none'}}}>
+            <IconButton onClick={()=>toggleOpen(true)}>
+              <MenuIcon/>
+            </IconButton>
           </Grid>
+          <SideDrawer open={open} onClose={toggleOpen}/>
         </Grid>
       </Container>
     </Box>
