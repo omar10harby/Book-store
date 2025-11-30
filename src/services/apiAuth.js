@@ -35,7 +35,9 @@ export async function Register(data) {
 export async function Login(data) {
   try {
     const res = await axios.post(`${baseUrl}/api/auth/login`, data);
-    saveAuthToken(res.data.token);
+    console.log(res);
+    
+    saveAuthToken(res.data.data.accessToken);
     return res.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || error.message);
