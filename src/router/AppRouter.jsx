@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import ForgetPassword from "../pages/ForgetPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Login from "../pages/Login";
+import Home from "../pages/Home";
 const router = createBrowserRouter([
   {
     element: <AuthLayout />,
@@ -32,7 +33,12 @@ const router = createBrowserRouter([
     path: "app",
 
     element: <AppLayout />,
-    children: [],
+    children: [
+      {
+        index:true,
+        element:<Home/>
+      }
+    ],
   },
 ]);
 function AppRouter() {
