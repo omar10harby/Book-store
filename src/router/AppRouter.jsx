@@ -7,6 +7,7 @@ import ForgetPassword from "../pages/ForgetPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
+import Books from "../pages/Books";
 const router = createBrowserRouter([
   {
     element: <AuthLayout />,
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         index:true,
         element:<Home/>
+      },
+      {
+        path:"books",
+        element:<Books/>
       }
     ],
   },
