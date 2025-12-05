@@ -33,3 +33,38 @@
   width: auto !important;
   text-align: center !important;
 }
+
+/* Books Slider Pagination */
+.books-bullet {
+  width: 12px;
+  height: 12px;
+  background: #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 1;
+  margin: 0 6px;
+}
+
+.books-bullet:hover {
+  background: var(--color-main-orange);
+  transform: scale(1.2);
+}
+
+.books-bullet-active {
+  background: var(--color-main-orange);
+  width: 32px;
+  border-radius: 6px;
+}
+.books-slider{
+  padding-bottom: 40px !important;
+}
+.books-slider .swiper-pagination {
+  bottom: 0px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  text-align: center !important;
+  
+}
