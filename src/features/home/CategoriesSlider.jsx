@@ -64,7 +64,7 @@ function CategoriesSlider() {
     <SwiperSlide key={index}>
       <div>
         <img
-          src={categoriesImages[index % categoriesImages.length]}
+          src= {categoriesImages[index % categoriesImages.length]}
           alt={cate.title}
           className="w-full rounded-lg object-cover"
         />
