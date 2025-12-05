@@ -33,10 +33,10 @@ function CategoriesSlider() {
           </h2>
         </div>
         <div className="hidden md:flex gap-2 mt-4">
-          <button className="custom-prev border border-gray-300  bg-white/40 hover:bg-main-orange text-main-orange hover:text-white p-3 rounded-full  transition-all duration-300">
+          <button className="custom-prev-cate border border-gray-300  bg-white/40 hover:bg-main-orange text-main-orange hover:text-white p-3 rounded-full  transition-all duration-300">
             <IoChevronBack className="w-6 h-6"/>
           </button>
-          <button className="custom-next border border-gray-300  bg-white/40 hover:bg-main-orange text-main-orange hover:text-white p-3 rounded-full  transition-all duration-300">
+          <button className="custom-next-cates border border-gray-300  bg-white/40 hover:bg-main-orange text-main-orange hover:text-white p-3 rounded-full  transition-all duration-300">
             <IoChevronForward className="w-6 h-6"/>
           </button>
         </div>
@@ -47,12 +47,12 @@ function CategoriesSlider() {
   modules={[Navigation]}
   loop={true}
   onBeforeInit={(swiper) => {
-    swiper.params.navigation.prevEl = ".custom-prev";
-    swiper.params.navigation.nextEl = ".custom-next";
+    swiper.params.navigation.prevEl = ".custom-prev-cate";
+    swiper.params.navigation.nextEl = ".custom-next-cate";
   }}
   navigation={{
-    prevEl: ".custom-prev",
-    nextEl: ".custom-next",
+    prevEl: ".custom-prev-cate",
+    nextEl: ".custom-next-cate",
   }}
   breakpoints={{
     0: { slidesPerView: 1 },
